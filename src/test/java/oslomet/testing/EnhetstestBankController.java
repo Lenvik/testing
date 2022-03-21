@@ -44,7 +44,7 @@ public class EnhetstestBankController {
         Konto tran = new Konto("105010123456", "01010110523",
                 720, "Lønnskonto", "NOK", null);
         when(sjekk.loggetInn()).thenReturn("01010110523");
-        when(repository.hentTransaksjoner(anyString(),anyString(),anyString())).thenReturn(tran);
+        Mockito.when(repository.hentTransaksjoner(anyString(),anyString(),anyString())).thenReturn(tran);
 
         Konto resultat = bankController.hentTransaksjoner("123123123","24 Februar","25 Februar");
         assertEquals(tran,resultat);
@@ -71,7 +71,7 @@ public class EnhetstestBankController {
 
         when(sjekk.loggetInn()).thenReturn("01010110523");
 
-        when(repository.hentKonti(anyString())).thenReturn(konti);
+        Mockito.when(repository.hentKonti(anyString())).thenReturn(konti);
 
         // act
         List<Konto> resultat = bankController.hentKonti();
@@ -107,7 +107,7 @@ public class EnhetstestBankController {
 
         when(sjekk.loggetInn()).thenReturn("01010110523");
 
-        when(repository.hentSaldi(anyString())).thenReturn(saldi);
+        Mockito.when(repository.hentSaldi(anyString())).thenReturn(saldi);
 
         List<Konto> resultat = bankController.hentSaldi();
 
@@ -126,7 +126,7 @@ public class EnhetstestBankController {
     public void registrerBetaling_loggetInn(){
         Transaksjon regbet = new Transaksjon(22,"asdads",22,"asdasd","asda","asda","asda");
         when(sjekk.loggetInn()).thenReturn("01010110523");
-        when(repository.registrerBetaling((any(Transaksjon.class)))).thenReturn("OK");
+        Mockito.when(repository.registrerBetaling((any(Transaksjon.class)))).thenReturn("OK");
         String resultat = bankController.registrerBetaling(regbet);
         assertEquals("OK",resultat);
     }
@@ -135,7 +135,7 @@ public class EnhetstestBankController {
     public void registrerBetaling_ikkeLoggetInn(){
         Transaksjon regbet = new Transaksjon(22,"asdads",22,"asdasd","asda","asda","asda");
         when(sjekk.loggetInn()).thenReturn("Feil");
-        when(repository.registrerBetaling((any(Transaksjon.class)))).thenReturn("Feil");
+        Mockito.when(repository.registrerBetaling((any(Transaksjon.class)))).thenReturn("Feil");
         String resultat = bankController.registrerBetaling(regbet);
         assertEquals("Feil",resultat);
 
@@ -152,7 +152,7 @@ public class EnhetstestBankController {
         hentBet.add(tran2);
 
         when(sjekk.loggetInn()).thenReturn("123123");
-        when(repository.hentBetalinger(anyString())).thenReturn(hentBet);
+        Mockito.when(repository.hentBetalinger(anyString())).thenReturn(hentBet);
 
         List<Transaksjon> resultat = bankController.hentBetalinger();
         assertEquals(hentBet, resultat);
@@ -182,8 +182,8 @@ public class EnhetstestBankController {
         hentBet.add(tran2);
 
         when(sjekk.loggetInn()).thenReturn("123123");
-        when(repository.utforBetaling(anyInt())).thenReturn("OK");
-        when(repository.hentBetalinger(anyString())).thenReturn(hentBet);
+        Mockito.when(repository.utforBetaling(anyInt())).thenReturn("OK");
+        Mockito.when(repository.hentBetalinger(anyString())).thenReturn(hentBet);
 
 
         List<Transaksjon> resultat = bankController.utforBetaling(7);
@@ -223,7 +223,7 @@ public class EnhetstestBankController {
 
         when(sjekk.loggetInn()).thenReturn("01010110523");
 
-        when(repository.hentKundeInfo(anyString())).thenReturn(enKunde);
+        Mockito.when(repository.hentKundeInfo(anyString())).thenReturn(enKunde);
 
         // act
         Kunde resultat = bankController.hentKundeInfo();
@@ -254,7 +254,7 @@ public class EnhetstestBankController {
                 "Asker", "22224444", "HeiHei");
 
         when(sjekk.loggetInn()).thenReturn("01010110523");
-        when(repository.endreKundeInfo(any(Kunde.class))).thenReturn("OK");
+        Mockito.when(repository.endreKundeInfo(any(Kunde.class))).thenReturn("OK");
         String resultat = bankController.endre(enKunde);
 
         assertEquals("OK",resultat);
